@@ -120,6 +120,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+log_path = os.path.join(BASE_DIR, "logs")
+if not os.path.exists(log_path):
+    os.makedirs("logs")
+    
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,  # 禁用已经存在的logger实例
@@ -135,9 +139,9 @@ LOGGING = {
             'format': '[%(levelname)s][%(asctime)s][%(filename)s:%(lineno)d]%(message)s'
         },
         # 定义一个特殊的日志格式
-        # 'collect': {
-        #     'format': '%(message)s'
-        # }
+        'collect': {
+            'format': '%(message)s'
+        }
     },
     # 过滤器
     'filters': {
@@ -171,15 +175,15 @@ LOGGING = {
             'formatter': 'standard',
             'encoding': 'utf-8',
         },
-        # 'collect': {   # 专门定义一个收集特定信息的日志
-        #     'level': 'INFO',
-        #     'class': 'logging.handlers.RotatingFileHandler',  # 保存到文件，自动切
-        #     'filename': os.path.join(BASE_DIR+'/logs/', "collect.log"),
-        #     'maxBytes': 1024 * 1024 * 50,  # 日志大小 50M
-        #     'backupCount': 5,
-        #     'formatter': 'collect',
-        #     'encoding': "utf-8"
-        # },
+        'collect': {   # 专门定义一个收集特定信息的日志
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',  # 保存到文件，自动切
+            'filename': os.path.join(BASE_DIR+'/logs/', "collect.log"),
+            'maxBytes': 1024 * 1024 * 50,  # 日志大小 50M
+            'backupCount': 5,
+            'formatter': 'collect',
+            'encoding': "utf-8"
+        },
         'scprits_handler': {
             'level':'DEBUG',
             'class':'logging.handlers.RotatingFileHandler',
@@ -195,10 +199,10 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': True,  # 向不向更高级别的logger传递
         },
-        # 'collect': {      # 名为 'collect'的logger还单独处理
-        #     'handlers': ['console', 'collect'],
-        #     'level': 'INFO',
-        # },
+        'collect': {      # 名为 'collect'的logger还单独处理
+            'handlers': ['console', 'collect'],
+            'level': 'INFO',
+        },
         'scripts': {
             'handlers': ['scprits_handler'],
             'level': 'INFO',
