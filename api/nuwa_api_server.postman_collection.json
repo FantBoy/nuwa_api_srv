@@ -1,0 +1,31 @@
+{
+	"info": {
+		"_postman_id": "3b2740fd-463a-40f7-bbc7-93e57b6826d8",
+		"name": "nuwa_api_server",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "nodetube/querygrouplist",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{nuwa_api_srv}}/nodetube/querygrouplist",
+					"host": [
+						"{{nuwa_api_srv}}"
+					],
+					"path": [
+						"nodetube",
+						"querygrouplist"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
