@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'nodetube_app',
+    'models'
 ]
 
 MIDDLEWARE = [
@@ -73,14 +74,26 @@ WSGI_APPLICATION = 'nuwa_api_srv.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
+#
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+# Database
+# https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'nuwa_db',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': 3306,
+        # 'OPTIONS': {'charset':'utf8mb4'},
+    },
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -166,6 +179,14 @@ LOGGING = {
             'formatter': 'standard',
             'encoding': 'utf-8',
         },
+        'file_sql': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(BASE_DIR+'/logs/', "sql_history.log"),
+            'maxBytes': 1024 * 1024 * 250,
+            'backupCount': 4,
+            'formatter': 'verbose',
+        },
         'error': {   # 专门用来记错误日志
             'level': 'ERROR',
             'class': 'logging.handlers.RotatingFileHandler',  # 保存到文件，自动切
@@ -194,6 +215,10 @@ LOGGING = {
         }
     },
     'loggers': {
+        'django.db.backends': {
+            'level': 'DEBUG',
+            'handlers': ['file_sql'],
+        },
         'django': {             # 默认的logger应用如下配置
             'handlers': ['default', 'console', 'error'],  # 上线之后可以把'console'移除
             'level': 'DEBUG',
