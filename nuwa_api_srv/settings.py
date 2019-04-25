@@ -143,6 +143,10 @@ LOGGING = {
     'disable_existing_loggers': False,  # 禁用已经存在的logger实例
     # 日志文件的格式
     'formatters': {
+        'verbose': {
+            'format': "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'datefmt': "%d/%b/%Y %H:%M:%S"
+        },
         # 详细的日志格式
         'standard': {
             'format': '[%(asctime)s][%(threadName)s:%(thread)d][task_id:%(name)s][%(filename)s:%(lineno)d]'
