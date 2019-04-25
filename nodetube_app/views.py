@@ -1,13 +1,19 @@
 from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse
 from django.views.generic import View
+from common.DecoratorTools.HttpRequest import HttpRequestDecorator
+from common.ErrorModule.ErrorException import AbcmouseWeChatServerException
+from models.models import ProgrameGroup
+
 # Create your views here.
 
 import logging 
 logger = logging.getLogger('django')
 
 
+
 class QueryGroupList(View):
+
     def get(self, request):
         data = [
             {
@@ -17,7 +23,11 @@ class QueryGroupList(View):
                 "subDescription": ""
             }
         ]
-        return JsonResponse({"data": data})
+        print(request.GET.get('name'))
+
+        group_list = ProgrameGroup.objects.all()
+        groups = [group.to_dict() for group in group_list]
+        return JsonResponse(groups)
 
 class EditGroup(View):
     # @HttpRequestDecorator
