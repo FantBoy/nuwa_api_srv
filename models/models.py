@@ -1,4 +1,5 @@
 from django.db import models
+from utils.django_utils import model_to_dict
 
 class Person(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -15,6 +16,10 @@ class ProgrameGroup(models.Model):
     group_name = models.CharField(max_length=64)
     desc = models.CharField(max_length=1024)
     modify_time = models.DateTimeField(auto_now_add=False, auto_now=True)
+
+    def to_dict(self, fields=None, exclude=None):
+        result = model_to_dict(self, fields=fields, exclude=exclude)
+        return result
 
     class Meta():
         db_table = 't_programe_group'
