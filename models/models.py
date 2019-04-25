@@ -2,7 +2,7 @@ from django.db import models
 from utils.django_utils import model_to_dict
 
 class Person(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=64)
     purview = models.IntegerField()
     modify_time = models.DateTimeField(auto_now_add=False, auto_now=True)
@@ -12,7 +12,7 @@ class Person(models.Model):
         db_table = 't_person'
 
 class ProgrameGroup(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     group_name = models.CharField(max_length=64)
     desc = models.CharField(max_length=1024)
     modify_time = models.DateTimeField(auto_now_add=False, auto_now=True)
@@ -31,7 +31,7 @@ class Device(models.Model):
         (-1, 'error')
 
     )
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     device_name = models.CharField(max_length=64)
     owner = models.ForeignKey(Person, on_delete=models.CASCADE)
     group = models.ForeignKey(ProgrameGroup, on_delete=models.CASCADE)
@@ -44,7 +44,7 @@ class Device(models.Model):
         db_table = 't_device_list'
 
 class PackageType(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=64)
 
     class Meta():
@@ -52,7 +52,7 @@ class PackageType(models.Model):
 
 
 class Package(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     package_name = models.CharField(max_length=64)
     package_type = models.ForeignKey(PackageType, on_delete=models.CASCADE)
     package_owner = models.ForeignKey(Person, on_delete=models.CASCADE)
@@ -63,7 +63,7 @@ class Package(models.Model):
         db_table = 't_package_list'
 
 class PackageVersion(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     package = models.ForeignKey(Package, on_delete=models.CASCADE)
     version = models.CharField(max_length=16)
     modify_time = models.DateTimeField(auto_now_add=False, auto_now=True)
