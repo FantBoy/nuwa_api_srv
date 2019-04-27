@@ -55,12 +55,15 @@ def HttpRequestDecorator(func):
         )
 
         logger.debug(log)
-        res_data = func(*args, **kw)
+        res_data, safe = func(*args, **kw)
         t2 = time.time()
-        logger.debug("""ret: {}, timecust: {}""".format(res_data.get('ret', None), t2 - t1))
+        if False == safe:
+            logger.debug("""ret: {}, timecust: {}""".format(len(res_data), t2 - t1))
+        else:
+            logger.debug("""ret: {}, timecust: {}""".format(res_data.get('ret', None), t2 - t1))
         # response = HttpResponse(content_type='application/json')
         # json.dump(res_data, response)
         logger.debug('END')
 
-        return JsonResponse(res_data)
+        return JsonResponse(res_data, safe = safe)
     return wrapper
