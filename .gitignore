@@ -1,4 +1,4 @@
 logs/*.log
 *.pyc
 .idea
-conf/my.cnf
+conf/*.cnf
