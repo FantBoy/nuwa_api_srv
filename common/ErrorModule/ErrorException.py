@@ -4,7 +4,7 @@ from common.ErrorModule.ErrorBase import ErrorClass
 import logging
 logger = logging.getLogger('django')
 
-class AbcmouseWeChatServerException(Exception):
+class NuwaApiServerException(Exception):
     def __init__(self, error_class, except_msg):
         if isinstance(error_class, ErrorClass):
             self.message = error_class.ERROR_MSG
