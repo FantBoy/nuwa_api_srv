@@ -18,8 +18,15 @@ from django.contrib import admin
 from django.urls import path
 from nodetube_app import urls as nodeTubeAppUrls
 
+apiUrlPatrerns = [
+    url(r'nodetube/', include(nodeTubeAppUrls, namespace='nodeTubeAppUrls')),
+
+]
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^nodetube/', include(nodeTubeAppUrls, namespace='nodeTubeAppUrls')),
-   
+    path('api/', include(apiUrlPatrerns)),
+
 ]
+
+
