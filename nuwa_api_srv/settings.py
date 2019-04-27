@@ -87,13 +87,19 @@ DATABASE_ROUTERS = ['models.router.DatabaseRouter']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'nuwa_db',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': 3306,
-        # 'OPTIONS': {'charset':'utf8mb4'},
-    },
+        'OPTIONS': {
+            'read_default_file': os.path.join(BASE_DIR + '/conf/' + 'my.cnf'),
+        },
+    }
+    #'default': {
+    #    'ENGINE': 'django.db.backends.mysql',
+    #    'NAME': '',
+    #    'USER': '',
+    #    'PASSWORD': '',
+    #    'HOST': '',
+    #    'PORT': ,
+    #    'OPTIONS': {'charset':'utf8mb4'},
+    #},
 }
 
 # Password validation
