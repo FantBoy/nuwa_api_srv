@@ -33,7 +33,7 @@ def model_to_dict(instance, fields=None, exclude=None):
     data = model_to_dict(instance, fields, exclude)
 
     opts = instance._meta
-    for f in itertools.chain(opts.concrete_fields, opts.virtual_fields, opts.many_to_many):
+    for f in itertools.chain(opts.concrete_fields, opts.private_fields, opts.many_to_many):
         if not getattr(f, 'editable', False):
             data[f.name] = f.value_from_object(instance)
 
