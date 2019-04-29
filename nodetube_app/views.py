@@ -5,7 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from common.DecoratorTools.HttpRequest import HttpRequestDecorator
 from common.ErrorModule.ErrorException import NuwaApiServerException
 from common.ErrorModule.ErrorCode import *
-from models.models import ProgrameGroup
+from models.models import ProgrameGroup, Device
 import json
 # Create your views here.
 
@@ -17,7 +17,7 @@ class QueryGroupList(View):
     def get(self, request):
 
         group_list = ProgrameGroup.objects.all()
-        groups = {}
+        groups = []
         if group_list:
             groups = [group.to_dict() for group in group_list]
         return groups, False
@@ -26,7 +26,7 @@ class EditGroup(View):
 
     def getData(self):
         group_list = ProgrameGroup.objects.all()
-        groups = {}
+        groups = []
         if group_list:
             groups = [group.to_dict() for group in group_list]
         return groups
@@ -97,6 +97,7 @@ class EditGroup(View):
     def post(self, request):
         # antd post的表单数据在body，不在requet.POST
         #request_dict = request.POST.dict()
+        print(request.body)
         request_dict = json.loads(request.body)
         method = request_dict.get('method', None)
         id = request_dict.get('id', None)
@@ -104,7 +105,7 @@ class EditGroup(View):
         if not method or None == id:
             errmsg = """post data do not has mothed or id: {}""".format(json.dumps(request_dict))
             logger.error(errmsg)
-            return {"ret": -1, "msg": errmsg}
+            return {"ret": -1, "msg": errmsg}, True
 
         del request_dict['method']
         del request_dict['id']
@@ -115,3 +116,21 @@ class EditGroup(View):
             return self.delete(id, request_dict), False
         elif 'update' == method:
             return self.update(id, request_dict), False
+
+class QueryDeviceList(View):
+    @HttpRequestDecorator
+    def get(self, request):
+
+        device_list = Device.objects.all()
+        devices = []
+        if device_list:
+            for device in device_list:
+                person = device.owner
+
+                device_dict = device.to_dict()
+                device_dict['owner'] = person.name
+                device_dict['group'] = device.group.group_name
+                # device_dict['status'] = device.get_status_display()
+                devices.append(device_dict)
+
+        return devices, False

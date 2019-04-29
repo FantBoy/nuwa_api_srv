@@ -40,12 +40,20 @@ class Device(models.Model):
     desc = models.CharField(max_length=1024)
     modify_time = models.DateTimeField(auto_now_add=False, auto_now=True)
 
+    def to_dict(self, fields=None, exclude=None):
+        result = model_to_dict(self, fields=fields, exclude=exclude)
+        return result
+
     class Meta():
         db_table = 't_device_list'
 
 class PackageType(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=64)
+
+    def to_dict(self, fields=None, exclude=None):
+        result = model_to_dict(self, fields=fields, exclude=exclude)
+        return result
 
     class Meta():
         db_table = 't_package_type'
@@ -59,6 +67,10 @@ class Package(models.Model):
     desc = models.CharField(max_length=1024)
     modify_time = models.DateTimeField(auto_now_add=False, auto_now=True)
 
+    def to_dict(self, fields=None, exclude=None):
+        result = model_to_dict(self, fields=fields, exclude=exclude)
+        return result
+
     class Meta():
         db_table = 't_package_list'
 
@@ -68,6 +80,10 @@ class PackageVersion(models.Model):
     version = models.CharField(max_length=16)
     modify_time = models.DateTimeField(auto_now_add=False, auto_now=True)
     desc = models.CharField(max_length=1024)
+
+    def to_dict(self, fields=None, exclude=None):
+        result = model_to_dict(self, fields=fields, exclude=exclude)
+        return result
 
     class Meta():
         db_table = 't_package_version'
