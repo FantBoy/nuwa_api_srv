@@ -132,5 +132,15 @@ class QueryDeviceList(View):
                 device_dict['group'] = device.group.group_name
                 # device_dict['status'] = device.get_status_display()
                 devices.append(device_dict)
+        pagination = {
+            "total": 1,
+            "pageSize": 1,
+            "current": 1
+        }
+        data = {
+            'list': devices,
+            'pagination': pagination
+        }
 
-        return devices, False
+
+        return data, True
